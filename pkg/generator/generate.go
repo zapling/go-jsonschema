@@ -490,7 +490,10 @@ func (g *schemaGenerator) generateDeclaredType(
 			for _, v := range validators {
 				if v.desc().hasError {
 					g.output.file.Package.AddImport("fmt", "")
-					break
+				}
+
+				for _, pack := range v.desc().packageDeps {
+					g.output.file.Package.AddImport(pack, "")
 				}
 			}
 

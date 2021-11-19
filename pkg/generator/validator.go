@@ -18,6 +18,7 @@ type validator interface {
 type validatorDesc struct {
 	hasError            bool
 	beforeJSONUnmarshal bool
+	packageDeps         []string
 }
 
 var (
