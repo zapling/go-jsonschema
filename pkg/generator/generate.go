@@ -414,6 +414,15 @@ func (g *schemaGenerator) generateDeclaredType(
 		return &codegen.NamedType{Decl: decl}, nil
 	}
 
+	// don't re-declare already declared type
+	if _, alreadyDeclared := g.output.declsByName[scope.string()]; alreadyDeclared {
+		decl := codegen.TypeDecl{
+			Name:    scope.string(),
+			Comment: t.Description,
+		}
+		return &codegen.NamedType{Decl: &decl}, nil
+	}
+
 	if t.Enum != nil {
 		return g.generateEnumType(t, scope)
 	}
